@@ -61,6 +61,28 @@ function composeFn(...fns) {
 
 #### 面向对象原型
 
-* 对象原型：查找属性找不到时去原型上查找：`__proto__`
-* 函数原型:   通过new操作符创建对象时，将函数的显示原型 `prototype`赋值给新创建对象的隐式原型`__proto__`
+* 对象对象原型：查找属性找不到时去原型上查找：`__proto__`、`Object.getPrototypeOf(obj)`
+* 函数对象原型:   通过new操作符创建对象时，将函数的显式原型 `prototype`赋值给新创建对象的隐式原型`__proto__`
+
+```js
+function Person(){
+}
+
+Person.prototype = {
+  message: "Hello Person",
+  info: {name:"zxl",age:18},
+  running: function(){},
+  eating: function(){}
+  // constructor: Person  这种方式Object.keys(Person.prototype)可以获取到“constructor”
+}
+
+// 数据属性描述符
+// 通过这种方式添加constructor，使用Object.keys(Person.prototype) 不会获取到constructor，跟默认的打印就完全一致了
+Object.defineProperty(Person.prototype,"constructor",{
+  enumerable: false,
+  configurable: true,
+  writable: true,
+  value: Person
+})
+```
 
